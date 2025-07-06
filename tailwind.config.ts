@@ -13,6 +13,33 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        pretendard: [
+          "Pretendard",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "system-ui",
+          "Roboto",
+          "Helvetica Neue",
+          "Segoe UI",
+          "Apple SD Gothic Neo",
+          "Noto Sans KR",
+          "Malgun Gothic",
+          "Apple Color Emoji",
+          "Segoe UI Emoji",
+          "Segoe UI Symbol",
+          "sans-serif",
+        ],
+        poppins: [
+          "Poppins",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "system-ui",
+          "Roboto",
+          "Helvetica Neue",
+          "sans-serif",
+        ],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -56,6 +83,14 @@ export default {
           "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
+        },
+        "health-orange": {
+          DEFAULT: "#F47A4D",
+          light: "#FDEBE4",
+        },
+        "health-gray": {
+          DEFAULT: "#1E1E1E",
+          light: "#B9B9B9",
         },
       },
       borderRadius: {
