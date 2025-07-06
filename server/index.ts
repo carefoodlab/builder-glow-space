@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
+import { handleSurveySubmit } from "./routes/survey";
 
 export function createServer() {
   const app = express();
@@ -16,6 +17,9 @@ export function createServer() {
   });
 
   app.get("/api/demo", handleDemo);
+
+  // Survey API route
+  app.post("/api/survey", handleSurveySubmit);
 
   return app;
 }
