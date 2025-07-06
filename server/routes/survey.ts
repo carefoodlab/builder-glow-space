@@ -1,19 +1,32 @@
 import { RequestHandler } from "express";
 
 interface SurveyData {
-  name: string;
+  // 기본 정보
   age: string;
   gender: string;
-  height: string;
-  weight: string;
+
+  // 건강 관련 질문
+  diagnosedDiseases: string[];
+  familyDiseases: string[];
+  healthInterests: string[];
   activityLevel: string;
-  healthGoal: string;
-  allergies: string;
-  preferredFoods: string;
-  avoidFoods: string;
-  mealFrequency: string;
-  budget: string;
-  cookingTime: string;
+
+  // 필요 재료 조사
+  mealTarget: string;
+  mealTargetNumber?: string;
+  dietGoal: string;
+  weeklyBudget: string;
+
+  // 음식 선호도
+  dietaryRestrictions: string[];
+  nutritionPreferences: string[];
+  cookingStyles: string[];
+  preferredTastes: string[];
+  preferredMeats: string[];
+  preferredSeafoods: string[];
+  avoidFoods: string[];
+
+  // 연락처
   email: string;
 }
 
@@ -41,19 +54,24 @@ async function saveToGoogleSheets(data: SurveyData) {
     // 구글시트에 전송할 데이터 구성
     const sheetData = {
       timestamp,
-      name: data.name,
       age: data.age,
       gender: data.gender === "male" ? "남성" : "여성",
-      height: data.height,
-      weight: data.weight,
+      diagnosedDiseases: data.diagnosedDiseases.join(", ") || "없음",
+      familyDiseases: data.familyDiseases.join(", ") || "없음",
+      healthInterests: data.healthInterests.join(", ") || "없음",
       activityLevel: getActivityLevelText(data.activityLevel),
-      healthGoal: getHealthGoalText(data.healthGoal),
-      allergies: data.allergies || "없음",
-      preferredFoods: data.preferredFoods || "없음",
-      avoidFoods: data.avoidFoods || "없음",
-      mealFrequency: data.mealFrequency,
-      budget: getBudgetText(data.budget),
-      cookingTime: getCookingTimeText(data.cookingTime),
+      mealTarget:
+        data.mealTarget +
+        (data.mealTargetNumber ? ` (${data.mealTargetNumber}인)` : ""),
+      dietGoal: data.dietGoal,
+      weeklyBudget: data.weeklyBudget,
+      dietaryRestrictions: data.dietaryRestrictions.join(", ") || "없음",
+      nutritionPreferences: data.nutritionPreferences.join(", ") || "없음",
+      cookingStyles: data.cookingStyles.join(", ") || "없음",
+      preferredTastes: data.preferredTastes.join(", ") || "없음",
+      preferredMeats: data.preferredMeats.join(", ") || "없음",
+      preferredSeafoods: data.preferredSeafoods.join(", ") || "없음",
+      avoidFoods: data.avoidFoods.join(", ") || "없음",
       email: data.email,
     };
 
@@ -82,15 +100,15 @@ async function saveToGoogleSheets(data: SurveyData) {
 // 활동량 텍스트 변환
 function getActivityLevelText(level: string): string {
   const texts: { [key: string]: string } = {
-    low: "낮음 (주로 앉아서 생활)",
-    moderate: "보통 (가벼운 운동 주 1-3회)",
-    high: "높음 (규칙적인 운동 주 4-6회)",
-    very_high: "매우 높음 (매일 운동)",
+    very_active: "매우 활동적 (일주일에 5일 이상 운동)",
+    active: "활동적 (일주일에 3-4일 운동)",
+    slightly_active: "약간 활동적 (일주일에 1-2일 운동)",
+    inactive: "비활동적 (운동 없음)",
   };
   return texts[level] || level;
 }
 
-// 건강 목표 텍스트 변환
+// 건강 목�� 텍스트 변환
 function getHealthGoalText(goal: string): string {
   const texts: { [key: string]: string } = {
     weight_loss: "체중 감량",
@@ -130,11 +148,12 @@ export const handleSurveySubmit: RequestHandler = async (req, res) => {
 
     // 필수 필드 검증
     const requiredFields = [
-      "name",
       "age",
       "gender",
-      "height",
-      "weight",
+      "activityLevel",
+      "mealTarget",
+      "dietGoal",
+      "weeklyBudget",
       "email",
     ];
     const missingFields = requiredFields.filter(
@@ -144,7 +163,7 @@ export const handleSurveySubmit: RequestHandler = async (req, res) => {
     if (missingFields.length > 0) {
       return res.status(400).json({
         success: false,
-        message: `필수 필드가 누락되���습니다: ${missingFields.join(", ")}`,
+        message: `필수 필드가 누락되었습니다: ${missingFields.join(", ")}`,
       });
     }
 

@@ -3,19 +3,32 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
 interface SurveyData {
-  name: string;
+  // 기본 정보
   age: string;
   gender: string;
-  height: string;
-  weight: string;
+
+  // 건강 관련 질문
+  diagnosedDiseases: string[];
+  familyDiseases: string[];
+  healthInterests: string[];
   activityLevel: string;
-  healthGoal: string;
-  allergies: string;
-  preferredFoods: string;
-  avoidFoods: string;
-  mealFrequency: string;
-  budget: string;
-  cookingTime: string;
+
+  // 필요 재료 조사
+  mealTarget: string;
+  mealTargetNumber?: string;
+  dietGoal: string;
+  weeklyBudget: string;
+
+  // 음식 선호도
+  dietaryRestrictions: string[];
+  nutritionPreferences: string[];
+  cookingStyles: string[];
+  preferredTastes: string[];
+  preferredMeats: string[];
+  preferredSeafoods: string[];
+  avoidFoods: string[];
+
+  // 연락처
   email: string;
 }
 
@@ -24,29 +37,57 @@ export default function Survey() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<SurveyData>({
-    name: "",
     age: "",
     gender: "",
-    height: "",
-    weight: "",
+    diagnosedDiseases: [],
+    familyDiseases: [],
+    healthInterests: [],
     activityLevel: "",
-    healthGoal: "",
-    allergies: "",
-    preferredFoods: "",
-    avoidFoods: "",
-    mealFrequency: "",
-    budget: "",
-    cookingTime: "",
+    mealTarget: "",
+    mealTargetNumber: "",
+    dietGoal: "",
+    weeklyBudget: "",
+    dietaryRestrictions: [],
+    nutritionPreferences: [],
+    cookingStyles: [],
+    preferredTastes: [],
+    preferredMeats: [],
+    preferredSeafoods: [],
+    avoidFoods: [],
     email: "",
   });
 
-  const totalSteps = 5;
+  const totalSteps = 4;
 
-  const handleInputChange = (field: keyof SurveyData, value: string) => {
+  const handleInputChange = (
+    field: keyof SurveyData,
+    value: string | string[],
+  ) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
     }));
+  };
+
+  const handleMultiSelect = (
+    field: keyof SurveyData,
+    value: string,
+    maxSelections: number = 3,
+  ) => {
+    const currentArray = formData[field] as string[];
+    let newArray: string[];
+
+    if (currentArray.includes(value)) {
+      newArray = currentArray.filter((item) => item !== value);
+    } else {
+      if (currentArray.length >= maxSelections) {
+        newArray = [...currentArray.slice(1), value];
+      } else {
+        newArray = [...currentArray, value];
+      }
+    }
+
+    handleInputChange(field, newArray);
   };
 
   const handleNext = () => {
@@ -73,7 +114,7 @@ export default function Survey() {
       });
 
       if (response.ok) {
-        alert("설문조사가 완료되었습니다! 맞춤 건강식단을 준비해드��겠습니다.");
+        alert("설문조사가 완료되었습니다! 맞춤 건강식단을 준비해드리겠습니다.");
         navigate("/");
       } else {
         alert("오류가 발생했습니다. 다시 시도해주세요.");
@@ -93,27 +134,14 @@ export default function Survey() {
           <div className="space-y-6">
             <div className="text-center mb-8">
               <h2 className="font-pretendard text-health-gray text-[24px] sm:text-[32px] font-bold mb-4">
-                기본 정보를 알려주세요
+                기본 정보 및 건강 상태
               </h2>
               <p className="font-pretendard text-health-gray/70 text-base sm:text-lg">
-                개인 맞춤형 식단을 위해 필요한 정보입니다
+                나이, 성별 및 건강 관련 정보를 알려주세요
               </p>
             </div>
 
-            <div className="space-y-4">
-              <div>
-                <label className="block font-pretendard text-health-gray font-semibold mb-2">
-                  이름 *
-                </label>
-                <input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) => handleInputChange("name", e.target.value)}
-                  className="w-full p-4 border border-gray-200 rounded-xl focus:border-health-orange focus:outline-none transition-colors font-pretendard"
-                  placeholder="성함을 입력해주세요"
-                />
-              </div>
-
+            <div className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block font-pretendard text-health-gray font-semibold mb-2">
@@ -146,36 +174,93 @@ export default function Survey() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block font-pretendard text-health-gray font-semibold mb-2">
-                    키 (cm) *
-                  </label>
-                  <input
-                    type="number"
-                    value={formData.height}
-                    onChange={(e) =>
-                      handleInputChange("height", e.target.value)
-                    }
-                    className="w-full p-4 border border-gray-200 rounded-xl focus:border-health-orange focus:outline-none transition-colors font-pretendard"
-                    placeholder="예: 170"
-                  />
+              <div>
+                <label className="block font-pretendard text-health-gray font-semibold mb-3">
+                  1. 병원이나 건강검진에서 진단 받은 질환을 선택해주세요 (최대
+                  3개)
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {[
+                    "고혈압",
+                    "당뇨병",
+                    "고지혈증",
+                    "비만",
+                    "심혈관 질환",
+                    "만성 위장장애",
+                    "호흡기 질환",
+                    "간 질환",
+                    "기타",
+                    "해당 없음",
+                  ].map((option) => (
+                    <label
+                      key={option}
+                      className={`flex items-center p-3 border rounded-xl hover:border-health-orange transition-colors cursor-pointer ${
+                        formData.diagnosedDiseases.includes(option)
+                          ? "border-health-orange bg-health-orange/5"
+                          : "border-gray-200"
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={formData.diagnosedDiseases.includes(option)}
+                        onChange={() =>
+                          handleMultiSelect("diagnosedDiseases", option, 3)
+                        }
+                        className="mr-3 text-health-orange focus:ring-health-orange"
+                      />
+                      <span className="font-pretendard text-health-gray text-sm">
+                        {option}
+                      </span>
+                    </label>
+                  ))}
                 </div>
+                <p className="text-xs text-health-gray/60 mt-2">
+                  선택된 항목: {formData.diagnosedDiseases.length}/3
+                </p>
+              </div>
 
-                <div>
-                  <label className="block font-pretendard text-health-gray font-semibold mb-2">
-                    몸무게 (kg) *
-                  </label>
-                  <input
-                    type="number"
-                    value={formData.weight}
-                    onChange={(e) =>
-                      handleInputChange("weight", e.target.value)
-                    }
-                    className="w-full p-4 border border-gray-200 rounded-xl focus:border-health-orange focus:outline-none transition-colors font-pretendard"
-                    placeholder="예: 65"
-                  />
+              <div>
+                <label className="block font-pretendard text-health-gray font-semibold mb-3">
+                  2. 가족 중 주요 질환을 가진 사람이 있습니까? (최대 3개)
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {[
+                    "고혈압",
+                    "당뇨병",
+                    "고지혈증",
+                    "비만",
+                    "심혈관 질환",
+                    "만성 위장장애",
+                    "호흡기 질환",
+                    "간 질환",
+                    "기타",
+                    "해당 없음",
+                  ].map((option) => (
+                    <label
+                      key={option}
+                      className={`flex items-center p-3 border rounded-xl hover:border-health-orange transition-colors cursor-pointer ${
+                        formData.familyDiseases.includes(option)
+                          ? "border-health-orange bg-health-orange/5"
+                          : "border-gray-200"
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={formData.familyDiseases.includes(option)}
+                        onChange={() =>
+                          handleMultiSelect("familyDiseases", option, 3)
+                        }
+                        className="mr-3 text-health-orange focus:ring-health-orange"
+                      />
+                      <span className="font-pretendard text-health-gray text-sm">
+                        {option}
+                      </span>
+                    </label>
+                  ))}
                 </div>
+                <p className="text-xs text-health-gray/60 mt-2">
+                  선택된 항목: {formData.familyDiseases.length}/3
+                </p>
               </div>
             </div>
           </div>
@@ -186,30 +271,72 @@ export default function Survey() {
           <div className="space-y-6">
             <div className="text-center mb-8">
               <h2 className="font-pretendard text-health-gray text-[24px] sm:text-[32px] font-bold mb-4">
-                활동량과 건강 목표
+                건강 관심사 및 활동 수준
               </h2>
               <p className="font-pretendard text-health-gray/70 text-base sm:text-lg">
-                운동량과 달성하고 싶은 건강 목표를 선택해주세요
+                관심 있는 건강 정보와 활동 수준을 알려주세요
               </p>
             </div>
 
             <div className="space-y-6">
               <div>
                 <label className="block font-pretendard text-health-gray font-semibold mb-3">
-                  평소 활동량은 어떠신가요? *
+                  3. 관심 있는 건강 정보를 선택해주세요 (최대 3개)
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {[
+                    "체중 감량",
+                    "근육 증진",
+                    "뼈/관절 건강",
+                    "소화기/장 건강",
+                    "면역력 강화",
+                    "스트레스 관리",
+                    "노화 방지",
+                    "기타",
+                  ].map((option) => (
+                    <label
+                      key={option}
+                      className={`flex items-center p-3 border rounded-xl hover:border-health-orange transition-colors cursor-pointer ${
+                        formData.healthInterests.includes(option)
+                          ? "border-health-orange bg-health-orange/5"
+                          : "border-gray-200"
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={formData.healthInterests.includes(option)}
+                        onChange={() =>
+                          handleMultiSelect("healthInterests", option, 3)
+                        }
+                        className="mr-3 text-health-orange focus:ring-health-orange"
+                      />
+                      <span className="font-pretendard text-health-gray text-sm">
+                        {option}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+                <p className="text-xs text-health-gray/60 mt-2">
+                  선택된 항목: {formData.healthInterests.length}/3
+                </p>
+              </div>
+
+              <div>
+                <label className="block font-pretendard text-health-gray font-semibold mb-3">
+                  4. 일상 활동 수준을 평가해주세요 *
                 </label>
                 <div className="grid grid-cols-1 gap-3">
                   {[
                     {
-                      value: "low",
-                      label: "낮음 (주로 앉아서 생활, 운동 거의 안함)",
+                      value: "very_active",
+                      label: "매우 활동적 (일주일에 5일 이상 운동)",
                     },
-                    { value: "moderate", label: "보통 (가벼운 운동 주 1-3회)" },
-                    { value: "high", label: "높음 (규칙적인 운동 주 4-6회)" },
+                    { value: "active", label: "활동적 (일주일에 3-4일 운동)" },
                     {
-                      value: "very_high",
-                      label: "매우 높음 (매일 운동하거나 육체적 활동이 많음)",
+                      value: "slightly_active",
+                      label: "약간 활동적 (일주일에 1-2일 운동)",
                     },
+                    { value: "inactive", label: "비활동적 (운동 없음)" },
                   ].map((option) => (
                     <label
                       key={option.value}
@@ -232,43 +359,6 @@ export default function Survey() {
                   ))}
                 </div>
               </div>
-
-              <div>
-                <label className="block font-pretendard text-health-gray font-semibold mb-3">
-                  건강 목표는 무엇인가요? *
-                </label>
-                <div className="grid grid-cols-1 gap-3">
-                  {[
-                    { value: "weight_loss", label: "체중 감량" },
-                    { value: "weight_gain", label: "체중 증가" },
-                    { value: "muscle_gain", label: "근육량 증가" },
-                    { value: "maintenance", label: "현재 체중 유지" },
-                    {
-                      value: "health_improvement",
-                      label: "전반적인 건강 개선",
-                    },
-                  ].map((option) => (
-                    <label
-                      key={option.value}
-                      className="flex items-center p-4 border border-gray-200 rounded-xl hover:border-health-orange transition-colors cursor-pointer"
-                    >
-                      <input
-                        type="radio"
-                        name="healthGoal"
-                        value={option.value}
-                        checked={formData.healthGoal === option.value}
-                        onChange={(e) =>
-                          handleInputChange("healthGoal", e.target.value)
-                        }
-                        className="mr-3 text-health-orange focus:ring-health-orange"
-                      />
-                      <span className="font-pretendard text-health-gray">
-                        {option.label}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
         );
@@ -278,54 +368,133 @@ export default function Survey() {
           <div className="space-y-6">
             <div className="text-center mb-8">
               <h2 className="font-pretendard text-health-gray text-[24px] sm:text-[32px] font-bold mb-4">
-                알레르기 및 식품 선호도
+                식사 준비 및 예산 정보
               </h2>
               <p className="font-pretendard text-health-gray/70 text-base sm:text-lg">
-                안전한 식단을 위해 알레르기와 선호도를 알려주세요
+                식사 계획 및 예산에 대해 알려주세요
               </p>
             </div>
 
             <div className="space-y-6">
               <div>
-                <label className="block font-pretendard text-health-gray font-semibold mb-2">
-                  알레르기가 있는 식품이 있나요?
+                <label className="block font-pretendard text-health-gray font-semibold mb-3">
+                  5. 식사를 준비하는 대상을 선택해주세요 *
                 </label>
-                <textarea
-                  value={formData.allergies}
-                  onChange={(e) =>
-                    handleInputChange("allergies", e.target.value)
-                  }
-                  className="w-full p-4 border border-gray-200 rounded-xl focus:border-health-orange focus:outline-none transition-colors font-pretendard resize-none h-24"
-                  placeholder="예: 견과류, 새우, 달걀 등 (없으면 '없음'이라고 적어주세요)"
-                />
+                <div className="grid grid-cols-1 gap-3">
+                  <label className="flex items-center p-4 border border-gray-200 rounded-xl hover:border-health-orange transition-colors cursor-pointer">
+                    <input
+                      type="radio"
+                      name="mealTarget"
+                      value="1인"
+                      checked={formData.mealTarget === "1인"}
+                      onChange={(e) =>
+                        handleInputChange("mealTarget", e.target.value)
+                      }
+                      className="mr-3 text-health-orange focus:ring-health-orange"
+                    />
+                    <span className="font-pretendard text-health-gray">
+                      1인
+                    </span>
+                  </label>
+
+                  <div className="flex items-center gap-4">
+                    <label className="flex items-center p-4 border border-gray-200 rounded-xl hover:border-health-orange transition-colors cursor-pointer flex-1">
+                      <input
+                        type="radio"
+                        name="mealTarget"
+                        value="1인+@"
+                        checked={formData.mealTarget === "1인+@"}
+                        onChange={(e) =>
+                          handleInputChange("mealTarget", e.target.value)
+                        }
+                        className="mr-3 text-health-orange focus:ring-health-orange"
+                      />
+                      <span className="font-pretendard text-health-gray">
+                        1인 +@
+                      </span>
+                    </label>
+                    {formData.mealTarget === "1인+@" && (
+                      <input
+                        type="number"
+                        value={formData.mealTargetNumber}
+                        onChange={(e) =>
+                          handleInputChange("mealTargetNumber", e.target.value)
+                        }
+                        className="w-20 p-2 border border-gray-200 rounded-lg focus:border-health-orange focus:outline-none"
+                        placeholder="인원"
+                        min="2"
+                      />
+                    )}
+                  </div>
+                </div>
               </div>
 
               <div>
-                <label className="block font-pretendard text-health-gray font-semibold mb-2">
-                  좋아하는 음식이나 자주 드시는 음식
+                <label className="block font-pretendard text-health-gray font-semibold mb-3">
+                  6. 식단과 관련된 주요 목표를 선택해주세요 *
                 </label>
-                <textarea
-                  value={formData.preferredFoods}
-                  onChange={(e) =>
-                    handleInputChange("preferredFoods", e.target.value)
-                  }
-                  className="w-full p-4 border border-gray-200 rounded-xl focus:border-health-orange focus:outline-none transition-colors font-pretendard resize-none h-24"
-                  placeholder="예: 닭가슴살, 브로콜리, 현미, 연어 등"
-                />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {[
+                    "시간 절약",
+                    "비용 절약",
+                    "요리 단순화",
+                    "건강 개선",
+                    "스트레스 감소",
+                  ].map((option) => (
+                    <label
+                      key={option}
+                      className="flex items-center p-4 border border-gray-200 rounded-xl hover:border-health-orange transition-colors cursor-pointer"
+                    >
+                      <input
+                        type="radio"
+                        name="dietGoal"
+                        value={option}
+                        checked={formData.dietGoal === option}
+                        onChange={(e) =>
+                          handleInputChange("dietGoal", e.target.value)
+                        }
+                        className="mr-3 text-health-orange focus:ring-health-orange"
+                      />
+                      <span className="font-pretendard text-health-gray">
+                        {option}
+                      </span>
+                    </label>
+                  ))}
+                </div>
               </div>
 
               <div>
-                <label className="block font-pretendard text-health-gray font-semibold mb-2">
-                  피하고 싶은 음식
+                <label className="block font-pretendard text-health-gray font-semibold mb-3">
+                  7. 주간 음식 지출 예산을 선택해주세요 *
                 </label>
-                <textarea
-                  value={formData.avoidFoods}
-                  onChange={(e) =>
-                    handleInputChange("avoidFoods", e.target.value)
-                  }
-                  className="w-full p-4 border border-gray-200 rounded-xl focus:border-health-orange focus:outline-none transition-colors font-pretendard resize-none h-24"
-                  placeholder="예: 매운 음식, 유제품, 기름진 음식 등"
-                />
+                <div className="grid grid-cols-1 gap-3">
+                  {[
+                    "50,000원 미만",
+                    "50,000 - 100,000원",
+                    "100,000원 - 150,000원",
+                    "150,000원 - 250,000원",
+                    "250,000원 이상",
+                  ].map((option) => (
+                    <label
+                      key={option}
+                      className="flex items-center p-4 border border-gray-200 rounded-xl hover:border-health-orange transition-colors cursor-pointer"
+                    >
+                      <input
+                        type="radio"
+                        name="weeklyBudget"
+                        value={option}
+                        checked={formData.weeklyBudget === option}
+                        onChange={(e) =>
+                          handleInputChange("weeklyBudget", e.target.value)
+                        }
+                        className="mr-3 text-health-orange focus:ring-health-orange"
+                      />
+                      <span className="font-pretendard text-health-gray">
+                        {option}
+                      </span>
+                    </label>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -336,41 +505,48 @@ export default function Survey() {
           <div className="space-y-6">
             <div className="text-center mb-8">
               <h2 className="font-pretendard text-health-gray text-[24px] sm:text-[32px] font-bold mb-4">
-                식사 패턴과 예산
+                음식 선호도 및 연락처
               </h2>
               <p className="font-pretendard text-health-gray/70 text-base sm:text-lg">
-                라이프스타일에 맞는 식단을 제안해드리기 위해 필요합니다
+                식품 선호도와 연락처를 입력해주세요
               </p>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-6 max-h-[600px] overflow-y-auto pr-2">
               <div>
                 <label className="block font-pretendard text-health-gray font-semibold mb-3">
-                  하루 몇 끼를 드시나요? *
+                  8. 식이 요구 사항을 선택해주세요 (복수 선택 가능)
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {[
-                    { value: "2", label: "2끼" },
-                    { value: "3", label: "3끼" },
-                    { value: "4", label: "4끼" },
-                    { value: "5+", label: "5끼 이상" },
+                    "유제품 무함유",
+                    "글루텐 무함유",
+                    "대두 무함유",
+                    "견과류 무함유",
+                    "달걀 무함유",
+                    "베지테리언",
+                    "비건",
+                    "기타",
+                    "해당 없음",
                   ].map((option) => (
                     <label
-                      key={option.value}
-                      className="flex items-center justify-center p-4 border border-gray-200 rounded-xl hover:border-health-orange transition-colors cursor-pointer"
+                      key={option}
+                      className={`flex items-center p-2 border rounded-lg hover:border-health-orange transition-colors cursor-pointer text-xs ${
+                        formData.dietaryRestrictions.includes(option)
+                          ? "border-health-orange bg-health-orange/5"
+                          : "border-gray-200"
+                      }`}
                     >
                       <input
-                        type="radio"
-                        name="mealFrequency"
-                        value={option.value}
-                        checked={formData.mealFrequency === option.value}
-                        onChange={(e) =>
-                          handleInputChange("mealFrequency", e.target.value)
+                        type="checkbox"
+                        checked={formData.dietaryRestrictions.includes(option)}
+                        onChange={() =>
+                          handleMultiSelect("dietaryRestrictions", option, 10)
                         }
                         className="mr-2 text-health-orange focus:ring-health-orange"
                       />
                       <span className="font-pretendard text-health-gray">
-                        {option.label}
+                        {option}
                       </span>
                     </label>
                   ))}
@@ -379,31 +555,37 @@ export default function Survey() {
 
               <div>
                 <label className="block font-pretendard text-health-gray font-semibold mb-3">
-                  한 달 식비 예산은 어느 정도인가요? *
+                  9. 영양 선호도를 선택해주세요 (복수 선택 가능)
                 </label>
-                <div className="grid grid-cols-1 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {[
-                    { value: "under_30", label: "30만원 미만" },
-                    { value: "30_50", label: "30-50만원" },
-                    { value: "50_70", label: "50-70만원" },
-                    { value: "over_70", label: "70만원 이상" },
+                    "저콜레스테롤",
+                    "저당",
+                    "저나트륨",
+                    "고섬유",
+                    "고단백",
+                    "저탄수화물",
+                    "저칼로리",
+                    "기타",
                   ].map((option) => (
                     <label
-                      key={option.value}
-                      className="flex items-center p-4 border border-gray-200 rounded-xl hover:border-health-orange transition-colors cursor-pointer"
+                      key={option}
+                      className={`flex items-center p-2 border rounded-lg hover:border-health-orange transition-colors cursor-pointer text-xs ${
+                        formData.nutritionPreferences.includes(option)
+                          ? "border-health-orange bg-health-orange/5"
+                          : "border-gray-200"
+                      }`}
                     >
                       <input
-                        type="radio"
-                        name="budget"
-                        value={option.value}
-                        checked={formData.budget === option.value}
-                        onChange={(e) =>
-                          handleInputChange("budget", e.target.value)
+                        type="checkbox"
+                        checked={formData.nutritionPreferences.includes(option)}
+                        onChange={() =>
+                          handleMultiSelect("nutritionPreferences", option, 10)
                         }
-                        className="mr-3 text-health-orange focus:ring-health-orange"
+                        className="mr-2 text-health-orange focus:ring-health-orange"
                       />
                       <span className="font-pretendard text-health-gray">
-                        {option.label}
+                        {option}
                       </span>
                     </label>
                   ))}
@@ -412,53 +594,199 @@ export default function Survey() {
 
               <div>
                 <label className="block font-pretendard text-health-gray font-semibold mb-3">
-                  요리에 투자할 수 있는 시간은? *
+                  10. 선호하는 요리 스타일을 선택해주세요 (복수 선택 가능)
                 </label>
-                <div className="grid grid-cols-1 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {[
-                    { value: "under_15", label: "15분 미만 (간단한 조리)" },
-                    { value: "15_30", label: "15-30분 (보통 조리)" },
-                    { value: "30_60", label: "30-60분 (정성스런 조리)" },
-                    { value: "over_60", label: "60분 이상 (요리를 즐김)" },
+                    "한식(탕, 찌개)",
+                    "한식(탕, 찌개 외)",
+                    "일식",
+                    "중식",
+                    "양식",
+                    "동남아식",
+                    "인도식",
                   ].map((option) => (
                     <label
-                      key={option.value}
-                      className="flex items-center p-4 border border-gray-200 rounded-xl hover:border-health-orange transition-colors cursor-pointer"
+                      key={option}
+                      className={`flex items-center p-3 border rounded-lg hover:border-health-orange transition-colors cursor-pointer ${
+                        formData.cookingStyles.includes(option)
+                          ? "border-health-orange bg-health-orange/5"
+                          : "border-gray-200"
+                      }`}
                     >
                       <input
-                        type="radio"
-                        name="cookingTime"
-                        value={option.value}
-                        checked={formData.cookingTime === option.value}
-                        onChange={(e) =>
-                          handleInputChange("cookingTime", e.target.value)
+                        type="checkbox"
+                        checked={formData.cookingStyles.includes(option)}
+                        onChange={() =>
+                          handleMultiSelect("cookingStyles", option, 10)
                         }
                         className="mr-3 text-health-orange focus:ring-health-orange"
                       />
-                      <span className="font-pretendard text-health-gray">
-                        {option.label}
+                      <span className="font-pretendard text-health-gray text-sm">
+                        {option}
                       </span>
                     </label>
                   ))}
                 </div>
               </div>
-            </div>
-          </div>
-        );
 
-      case 5:
-        return (
-          <div className="space-y-6">
-            <div className="text-center mb-8">
-              <h2 className="font-pretendard text-health-gray text-[24px] sm:text-[32px] font-bold mb-4">
-                연락처 정보
-              </h2>
-              <p className="font-pretendard text-health-gray/70 text-base sm:text-lg">
-                맞춤 식단을 전달해드리기 위해 필요합니다
-              </p>
-            </div>
+              <div>
+                <label className="block font-pretendard text-health-gray font-semibold mb-3">
+                  11. 선호하는 맛을 선택해주세요 (복수 선택 가능)
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  {[
+                    "단맛",
+                    "매운맛",
+                    "새콤한맛",
+                    "크리미",
+                    "치즈 맛",
+                    "허브",
+                  ].map((option) => (
+                    <label
+                      key={option}
+                      className={`flex items-center p-2 border rounded-lg hover:border-health-orange transition-colors cursor-pointer text-sm ${
+                        formData.preferredTastes.includes(option)
+                          ? "border-health-orange bg-health-orange/5"
+                          : "border-gray-200"
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={formData.preferredTastes.includes(option)}
+                        onChange={() =>
+                          handleMultiSelect("preferredTastes", option, 10)
+                        }
+                        className="mr-2 text-health-orange focus:ring-health-orange"
+                      />
+                      <span className="font-pretendard text-health-gray">
+                        {option}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </div>
 
-            <div className="space-y-4">
+              <div>
+                <label className="block font-pretendard text-health-gray font-semibold mb-3">
+                  12. 선호하는 육류와 해산물을 선택해주세요 (복수 선택 가능)
+                </label>
+                <div className="space-y-3">
+                  <div>
+                    <p className="font-pretendard text-health-gray font-medium mb-2">
+                      육류
+                    </p>
+                    <div className="grid grid-cols-2 gap-2">
+                      {["소고기", "돼지고기", "닭고기", "양고기"].map(
+                        (option) => (
+                          <label
+                            key={option}
+                            className={`flex items-center p-2 border rounded-lg hover:border-health-orange transition-colors cursor-pointer ${
+                              formData.preferredMeats.includes(option)
+                                ? "border-health-orange bg-health-orange/5"
+                                : "border-gray-200"
+                            }`}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={formData.preferredMeats.includes(option)}
+                              onChange={() =>
+                                handleMultiSelect("preferredMeats", option, 10)
+                              }
+                              className="mr-2 text-health-orange focus:ring-health-orange"
+                            />
+                            <span className="font-pretendard text-health-gray text-sm">
+                              {option}
+                            </span>
+                          </label>
+                        ),
+                      )}
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="font-pretendard text-health-gray font-medium mb-2">
+                      해산물
+                    </p>
+                    <div className="grid grid-cols-2 gap-2">
+                      {[
+                        "연어",
+                        "참치",
+                        "송어",
+                        "백색어류",
+                        "등푸른생선",
+                        "새우",
+                        "가리비",
+                        "오징어/쭈꾸미",
+                      ].map((option) => (
+                        <label
+                          key={option}
+                          className={`flex items-center p-2 border rounded-lg hover:border-health-orange transition-colors cursor-pointer ${
+                            formData.preferredSeafoods.includes(option)
+                              ? "border-health-orange bg-health-orange/5"
+                              : "border-gray-200"
+                          }`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={formData.preferredSeafoods.includes(
+                              option,
+                            )}
+                            onChange={() =>
+                              handleMultiSelect("preferredSeafoods", option, 10)
+                            }
+                            className="mr-2 text-health-orange focus:ring-health-orange"
+                          />
+                          <span className="font-pretendard text-health-gray text-sm">
+                            {option}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label className="block font-pretendard text-health-gray font-semibold mb-3">
+                  13. 섭취 불가 및 기피 음식을 선택해주세요 (복수 선택 가능)
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  {[
+                    "오이",
+                    "가지",
+                    "당근",
+                    "피망",
+                    "브로콜리",
+                    "토마토",
+                    "견과류",
+                    "갑각류",
+                    "기타",
+                  ].map((option) => (
+                    <label
+                      key={option}
+                      className={`flex items-center p-2 border rounded-lg hover:border-health-orange transition-colors cursor-pointer text-sm ${
+                        formData.avoidFoods.includes(option)
+                          ? "border-health-orange bg-health-orange/5"
+                          : "border-gray-200"
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={formData.avoidFoods.includes(option)}
+                        onChange={() =>
+                          handleMultiSelect("avoidFoods", option, 10)
+                        }
+                        className="mr-2 text-health-orange focus:ring-health-orange"
+                      />
+                      <span className="font-pretendard text-health-gray">
+                        {option}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
               <div>
                 <label className="block font-pretendard text-health-gray font-semibold mb-2">
                   이메일 주소 *
@@ -494,22 +822,14 @@ export default function Survey() {
   const isStepValid = () => {
     switch (currentStep) {
       case 1:
-        return (
-          formData.name &&
-          formData.age &&
-          formData.gender &&
-          formData.height &&
-          formData.weight
-        );
+        return formData.age && formData.gender;
       case 2:
-        return formData.activityLevel && formData.healthGoal;
+        return formData.activityLevel;
       case 3:
-        return true; // 선택사항들이므로 통과
-      case 4:
         return (
-          formData.mealFrequency && formData.budget && formData.cookingTime
+          formData.mealTarget && formData.dietGoal && formData.weeklyBudget
         );
-      case 5:
+      case 4:
         return formData.email && formData.email.includes("@");
       default:
         return false;
@@ -561,7 +881,7 @@ export default function Survey() {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-20 py-8 sm:py-12">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl border border-white/20">
             {renderStep()}
 
