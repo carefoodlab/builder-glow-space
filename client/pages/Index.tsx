@@ -18,18 +18,18 @@ export default function Index() {
     <div className="min-h-screen bg-gradient-to-br from-white via-orange-50/30 to-white">
       {/* Hero Section */}
       <section
-        className="relative w-full h-[500px] md:h-[660px] bg-cover bg-center overflow-hidden"
+        className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[660px] bg-cover bg-center overflow-hidden"
         style={{
           backgroundImage: `url('https://cdn.builder.io/api/v1/image/assets/TEMP/2d102990e86d9c5bf4b979ceedc594e1baeb0013?width=3840')`,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-black/50 via-black/30 to-transparent"></div>
-        <div className="relative z-10 container mx-auto px-4 md:px-8 lg:px-20 h-full flex flex-col justify-center">
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 lg:px-20 h-full flex flex-col justify-center">
           <div
             className={`max-w-2xl transform transition-all duration-1000 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
           >
-            <div className="backdrop-blur-sm bg-white/10 rounded-3xl p-8 md:p-10 border border-white/20 shadow-2xl">
-              <h1 className="font-pretendard text-white text-[28px] md:text-[40px] lg:text-[50px] font-bold leading-[130%] mb-6 drop-shadow-lg">
+            <div className="backdrop-blur-sm bg-white/10 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-10 border border-white/20 shadow-2xl">
+              <h1 className="font-pretendard text-white text-[22px] sm:text-[28px] md:text-[36px] lg:text-[50px] font-bold leading-[130%] mb-4 sm:mb-6 drop-shadow-lg">
                 간단 데이터를 나에게 딱 맞는
                 <br />
                 <span className="text-health-orange drop-shadow-lg">
@@ -37,11 +37,11 @@ export default function Index() {
                 </span>
                 를 추천해요
               </h1>
-              <Button className="group bg-gradient-to-r from-health-orange to-orange-400 hover:from-orange-400 hover:to-health-orange text-black font-poppins font-semibold px-6 md:px-10 py-4 md:py-5 text-sm md:text-base rounded-[88px] h-auto transform transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-xl">
-                <span className="flex items-center gap-2">
+              <Button className="group bg-gradient-to-r from-health-orange to-orange-400 hover:from-orange-400 hover:to-health-orange text-black font-poppins font-semibold px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 text-xs sm:text-sm md:text-base rounded-[88px] h-auto transform transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-xl w-full sm:w-auto">
+                <span className="flex items-center justify-center gap-2">
                   건강 식단 추천받기
                   <svg
-                    className="w-4 h-4 transform transition-transform group-hover:translate-x-1"
+                    className="w-3 h-3 sm:w-4 sm:h-4 transform transition-transform group-hover:translate-x-1"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -58,9 +58,9 @@ export default function Index() {
             </div>
           </div>
         </div>
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden sm:block">
           <svg
-            className="w-6 h-6 text-white/70"
+            className="w-5 h-5 sm:w-6 sm:h-6 text-white/70"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -76,16 +76,16 @@ export default function Index() {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 md:py-24 lg:py-[120px] px-4 md:px-8 lg:px-20 relative overflow-hidden">
+      <section className="py-12 sm:py-16 md:py-24 lg:py-[120px] px-4 sm:px-6 md:px-8 lg:px-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-orange-50/20 to-transparent"></div>
         <div className="container mx-auto max-w-[1280px] relative z-10">
-          <div className="mb-12 md:mb-16 text-center">
-            <div className="inline-block px-6 py-2 bg-health-orange/10 rounded-full mb-6">
-              <span className="font-pretendard text-health-orange text-sm font-semibold">
+          <div className="mb-8 sm:mb-12 md:mb-16 text-center">
+            <div className="inline-block px-4 sm:px-6 py-2 bg-health-orange/10 rounded-full mb-4 sm:mb-6">
+              <span className="font-pretendard text-health-orange text-xs sm:text-sm font-semibold">
                 4단계 프로세스
               </span>
             </div>
-            <h2 className="font-pretendard text-health-gray text-[28px] md:text-[40px] lg:text-[50px] font-bold leading-[130%]">
+            <h2 className="font-pretendard text-health-gray text-[20px] sm:text-[28px] md:text-[36px] lg:text-[50px] font-bold leading-[130%] px-2">
               나의 건강상태를 분석해서
               <br />
               <span className="bg-gradient-to-r from-health-orange to-orange-500 bg-clip-text text-transparent">
@@ -95,7 +95,7 @@ export default function Index() {
             </h2>
           </div>
 
-          <div className="space-y-12 md:space-y-20">
+          <div className="space-y-8 sm:space-y-12 md:space-y-16 lg:space-y-20">
             {/* Feature 1 */}
             <div className="group flex flex-col lg:flex-row items-center gap-8 lg:gap-[70px] transform transition-all duration-700 hover:scale-[1.02]">
               <div className="relative overflow-hidden rounded-3xl shadow-2xl">
@@ -123,26 +123,26 @@ export default function Index() {
             </div>
 
             {/* Feature 2 */}
-            <div className="group flex flex-col lg:flex-row-reverse items-center gap-8 lg:gap-[70px] transform transition-all duration-700 hover:scale-[1.02]">
-              <div className="relative overflow-hidden rounded-3xl shadow-2xl">
+            <div className="group flex flex-col lg:flex-row-reverse items-center gap-6 sm:gap-8 lg:gap-[70px] transform transition-all duration-700 hover:scale-[1.02]">
+              <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl w-full lg:w-auto">
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/354f7dbcfc61f98bb717eef174e7c00e7e1bc16e?width=1140"
                   alt="개인 건강 상태 분석"
-                  className="w-full lg:w-[570px] h-[250px] md:h-[300px] lg:h-[390px] object-cover transform transition-all duration-500 group-hover:scale-105"
+                  className="w-full lg:w-[570px] h-[200px] sm:h-[250px] md:h-[300px] lg:h-[390px] object-cover transform transition-all duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-tl from-blue-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute top-4 right-4 w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                <div className="absolute top-3 right-3 sm:top-4 sm:right-4 w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-lg">
                   2
                 </div>
               </div>
-              <div className="flex-1 text-center lg:text-right">
-                <div className="mb-4 flex justify-center lg:justify-end">
-                  <span className="inline-block w-12 h-1 bg-gradient-to-r from-blue-500 to-blue-400 rounded-full"></span>
+              <div className="flex-1 text-center lg:text-right px-4 sm:px-0">
+                <div className="mb-3 sm:mb-4 flex justify-center lg:justify-end">
+                  <span className="inline-block w-8 sm:w-12 h-1 bg-gradient-to-r from-blue-500 to-blue-400 rounded-full"></span>
                 </div>
-                <h3 className="font-pretendard text-health-gray text-[24px] md:text-[32px] lg:text-[40px] font-bold leading-[140%] mb-4 group-hover:text-blue-500 transition-colors duration-300">
+                <h3 className="font-pretendard text-health-gray text-[18px] sm:text-[24px] md:text-[28px] lg:text-[40px] font-bold leading-[140%] mb-3 sm:mb-4 group-hover:text-blue-500 transition-colors duration-300">
                   개인 건강 상태 분석
                 </h3>
-                <p className="font-pretendard text-health-gray/80 text-lg md:text-xl font-normal leading-[140%]">
+                <p className="font-pretendard text-health-gray/80 text-sm sm:text-base md:text-lg lg:text-xl font-normal leading-[140%]">
                   AI가 혈압, 혈당, 등 주요 데이터를 이해하여 현재 개인의
                   건강상태를 자세히 분석하여 보여줍니다
                 </p>
@@ -150,57 +150,55 @@ export default function Index() {
             </div>
 
             {/* Feature 3 */}
-            <div className="group flex flex-col lg:flex-row items-center gap-8 lg:gap-[70px] transform transition-all duration-700 hover:scale-[1.02]">
-              <div className="relative overflow-hidden rounded-3xl shadow-2xl">
+            <div className="group flex flex-col lg:flex-row items-center gap-6 sm:gap-8 lg:gap-[70px] transform transition-all duration-700 hover:scale-[1.02]">
+              <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl w-full lg:w-auto">
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/0d2ce213cff8303c1967cc3f05fd664732005ae3?width=1140"
                   alt="맞춤형 음식 추천"
-                  className="w-full lg:w-[570px] h-[250px] md:h-[300px] lg:h-[390px] object-cover transform transition-all duration-500 group-hover:scale-105"
+                  className="w-full lg:w-[570px] h-[200px] sm:h-[250px] md:h-[300px] lg:h-[390px] object-cover transform transition-all duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-tr from-green-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute top-4 left-4 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 w-10 h-10 sm:w-12 sm:h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-lg">
                   3
                 </div>
               </div>
-              <div className="flex-1 text-center lg:text-left">
-                <div className="mb-4">
-                  <span className="inline-block w-12 h-1 bg-gradient-to-r from-green-500 to-green-400 rounded-full"></span>
+              <div className="flex-1 text-center lg:text-left px-4 sm:px-0">
+                <div className="mb-3 sm:mb-4 flex justify-center lg:justify-start">
+                  <span className="inline-block w-8 sm:w-12 h-1 bg-gradient-to-r from-green-500 to-green-400 rounded-full"></span>
                 </div>
-                <h3 className="font-pretendard text-health-gray text-[24px] md:text-[32px] lg:text-[40px] font-bold leading-[140%] mb-4 group-hover:text-green-500 transition-colors duration-300">
+                <h3 className="font-pretendard text-health-gray text-[18px] sm:text-[24px] md:text-[28px] lg:text-[40px] font-bold leading-[140%] mb-3 sm:mb-4 group-hover:text-green-500 transition-colors duration-300">
                   맞춤형 음식 추천
                 </h3>
-                <p className="font-pretendard text-health-gray/80 text-lg md:text-xl font-normal leading-[140%]">
-                  내 건강 상태에 적합한 음식은 무엇이 있고,
-                  <br className="hidden lg:block" />
-                  나만의 맞춤형 건강 식단 레시피는 어떤것이 있는 추천합니다.
+                <p className="font-pretendard text-health-gray/80 text-sm sm:text-base md:text-lg lg:text-xl font-normal leading-[140%]">
+                  내 건강 상태에 적합한 음식은 무엇이 있고, 나만의 맞춤형 건강
+                  식단 레시피는 어떤것이 있는 추천합니다.
                 </p>
               </div>
             </div>
 
             {/* Feature 4 */}
-            <div className="group flex flex-col lg:flex-row-reverse items-center gap-8 lg:gap-[70px] transform transition-all duration-700 hover:scale-[1.02]">
-              <div className="relative overflow-hidden rounded-3xl shadow-2xl">
+            <div className="group flex flex-col lg:flex-row-reverse items-center gap-6 sm:gap-8 lg:gap-[70px] transform transition-all duration-700 hover:scale-[1.02]">
+              <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl w-full lg:w-auto">
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/572b6b00b44d2e666b50f92ef35781608c132207?width=1140"
                   alt="신선한 식재료 배송"
-                  className="w-full lg:w-[570px] h-[250px] md:h-[300px] lg:h-[390px] object-cover transform transition-all duration-500 group-hover:scale-105"
+                  className="w-full lg:w-[570px] h-[200px] sm:h-[250px] md:h-[300px] lg:h-[390px] object-cover transform transition-all duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-tl from-purple-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute top-4 right-4 w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                <div className="absolute top-3 right-3 sm:top-4 sm:right-4 w-10 h-10 sm:w-12 sm:h-12 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-lg">
                   4
                 </div>
               </div>
-              <div className="flex-1 text-center lg:text-right">
-                <div className="mb-4 flex justify-center lg:justify-end">
-                  <span className="inline-block w-12 h-1 bg-gradient-to-r from-purple-500 to-purple-400 rounded-full"></span>
+              <div className="flex-1 text-center lg:text-right px-4 sm:px-0">
+                <div className="mb-3 sm:mb-4 flex justify-center lg:justify-end">
+                  <span className="inline-block w-8 sm:w-12 h-1 bg-gradient-to-r from-purple-500 to-purple-400 rounded-full"></span>
                 </div>
-                <h3 className="font-pretendard text-health-gray text-[24px] md:text-[32px] lg:text-[40px] font-bold leading-[140%] mb-4 group-hover:text-purple-500 transition-colors duration-300">
+                <h3 className="font-pretendard text-health-gray text-[18px] sm:text-[24px] md:text-[28px] lg:text-[40px] font-bold leading-[140%] mb-3 sm:mb-4 group-hover:text-purple-500 transition-colors duration-300">
                   신선한 식재료 배송
                 </h3>
-                <p className="font-pretendard text-health-gray/80 text-lg md:text-xl font-normal leading-[140%]">
-                  내 건강 상태에 적합한 음식은 무엇이 있고,
-                  <br className="hidden lg:block" />
-                  나만의 맞춤형 건강 식단 레시피는 어떤것이 있는 추천합니다.
+                <p className="font-pretendard text-health-gray/80 text-sm sm:text-base md:text-lg lg:text-xl font-normal leading-[140%]">
+                  내 건강 상태에 적합한 음식은 무엇이 있고, 나만의 맞춤형 건강
+                  식단 레시피는 어떤것이 있는 추천합니다.
                 </p>
               </div>
             </div>
