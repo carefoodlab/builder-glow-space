@@ -6,9 +6,11 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Index() {
   const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsVisible(true);
@@ -37,7 +39,10 @@ export default function Index() {
                 </span>
                 를 추천해요
               </h1>
-              <Button className="group bg-gradient-to-r from-health-orange to-orange-400 hover:from-orange-400 hover:to-health-orange text-black font-poppins font-semibold px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 text-xs sm:text-sm md:text-base rounded-[88px] h-auto transform transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-xl w-full sm:w-auto">
+              <Button
+                onClick={() => navigate("/survey")}
+                className="group bg-gradient-to-r from-health-orange to-orange-400 hover:from-orange-400 hover:to-health-orange text-black font-poppins font-semibold px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 text-xs sm:text-sm md:text-base rounded-[88px] h-auto transform transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-xl w-full sm:w-auto"
+              >
                 <span className="flex items-center justify-center gap-2">
                   건강 식단 추천받기
                   <svg
@@ -387,7 +392,7 @@ export default function Index() {
                 요즘 부모님 건강이 예전 같지 않아서 늘 걱정이 많았거든요. 그런데
                 나이와 생활 습관에 맞춘 식단을 제안해줘서 처음엔 '귀찮다'고
                 하시던 엄마가 요즘은 '이거 덕분에 속도 편하고 혈압도 좀 내려간
-                것 같다'고 하시더라고요. 매일 뭘 챙겨드리긴 어렵지만, 이���
+                것 같다'고 하시더라고요. 매일 뭘 챙겨드리긴 어렵지만, 이런
                 서비스가 있어서 정말 마음이 놓여요
                 <span className="text-purple-500 text-2xl sm:text-3xl lg:text-4xl font-bold">
                   "
@@ -463,7 +468,7 @@ export default function Index() {
                   Q. 비건/채식 식단도 지원하나요?
                 </AccordionTrigger>
                 <AccordionContent className="font-pretendard text-health-gray/80 text-sm sm:text-base md:text-lg lg:text-xl font-normal leading-[140%] pt-4 sm:pt-6 border-t border-gray-100 mt-3 sm:mt-4">
-                  A. 네! 사용자의 건강 상태에 맞춘 균형 잡힌 ��단을 제공합니다.
+                  A. 네! 사용자의 건강 상태에 맞춘 균형 잡힌 식단을 제공합니다.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -488,7 +493,10 @@ export default function Index() {
                 <span className="text-yellow-300">건강하고 즐겁게</span>{" "}
                 살기위한 첫 단계
               </h2>
-              <Button className="group bg-gradient-to-r from-white to-gray-100 hover:from-gray-100 hover:to-white text-health-orange font-poppins font-semibold px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 text-xs sm:text-sm md:text-base rounded-[88px] h-auto transform transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-xl w-full sm:w-auto">
+              <Button
+                onClick={() => navigate("/survey")}
+                className="group bg-gradient-to-r from-white to-gray-100 hover:from-gray-100 hover:to-white text-health-orange font-poppins font-semibold px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 text-xs sm:text-sm md:text-base rounded-[88px] h-auto transform transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-xl w-full sm:w-auto"
+              >
                 <span className="flex items-center justify-center gap-2">
                   내 건강식단 찾아보기
                   <svg
