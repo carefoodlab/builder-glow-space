@@ -73,7 +73,7 @@ export default function Index() {
                 </h3>
                 <p className="font-pretendard text-health-gray text-lg md:text-xl font-normal leading-[140%]">
                   AI가 혈압, 혈당, 등 주요 데이터를 이해하여 현재 개인의
-                  건강상태를 자세히 분석하여 ��여줍니다
+                  건강상태를 자세히 분석하여 보여줍니다
                 </p>
               </div>
             </div>
@@ -150,7 +150,7 @@ export default function Index() {
                 예전에는 하루 세끼 뭘 먹어야 할지 늘 고민이었어요. 그런데 제
                 식습관과 취향에 맞춰서 매일 식단을 추천해주니까, 지금은 그냥
                 알려주는 대로 따라만 해도 되니까 너무 편해요. 식재료도 흔한
-                것들이고, 요리법도 간단해서 바쁠 때도 부담이 없어요!
+                것들이고, 요리법도 간���해서 바쁠 때도 부담이 없어요!
               </p>
             </div>
 
@@ -172,8 +172,8 @@ export default function Index() {
               <p className="font-pretendard text-health-gray text-base font-normal leading-[150%]">
                 이제는 건강 좀 챙겨야지 하면서도 늘 작심삼일이었는데, 처음으로
                 루틴이 생겼어요. 제게 딱 맞는 식단이 도착하고, 따라 하기 쉬운
-                요��법까지 알려주니까 자연스럽게 실천하게 되더라고요. 2주 정도
-                지나니까 몸이 덜 붓고, 피부도 뭔가 정돈된 느낌이에요. 내 몸이
+                요리법까지 알려주니까 자연스럽게 실천하게 되더라고요. 2주 정도
+                지나니까 몸이 덜 붓고, 피부도 뭔가 정돈된 느낌이에��. 내 몸이
                 변화하고 있다는 걸 확실히 느껴요
               </p>
             </div>
@@ -197,8 +197,8 @@ export default function Index() {
                 저는 요리에는 자신도 없고, 건강식 하면 뭔가 복잡하고 맛없는
                 음식이라는 이미지가 있었어요. 그런데 추천받은 레시피들은 재료도
                 최소한이고, 만드는 데 15분도 안 걸리는데 정말 맛있더라고요. 매일
-                새로운 아이디어가 떠오르는 느낌이라 재미도 있어요. 이젠 혼자
-                사는 친구들한테도 ��천하게 됐어요.
+                새로운 아이디어가 떠오르는 ���낌이라 재미도 있어요. 이젠 혼자
+                사는 친구들한테도 추천하게 됐어요.
               </p>
             </div>
 
@@ -256,10 +256,10 @@ export default function Index() {
               value="item-2"
               className="border-b border-health-gray-light pb-8"
             >
-              <AccordionTrigger className="font-pretendard text-health-gray text-xl font-bold leading-[140%] text-left hover:no-underline">
+              <AccordionTrigger className="font-pretendard text-health-gray text-lg md:text-xl font-bold leading-[140%] text-left hover:no-underline">
                 Q. 레시피 추천은 얼마나 자주 받을 수 있나요?
               </AccordionTrigger>
-              <AccordionContent className="font-pretendard text-health-gray text-xl font-normal leading-[140%] pt-7">
+              <AccordionContent className="font-pretendard text-health-gray text-lg md:text-xl font-normal leading-[140%] pt-7">
                 A. 원하는 빈도를 설정할 수 있으며, 매일 또는 주 3~4회 등 선택이
                 가능합니다.
               </AccordionContent>
@@ -269,10 +269,10 @@ export default function Index() {
               value="item-3"
               className="border-b border-health-gray-light pb-8"
             >
-              <AccordionTrigger className="font-pretendard text-health-gray text-xl font-bold leading-[140%] text-left hover:no-underline">
+              <AccordionTrigger className="font-pretendard text-health-gray text-lg md:text-xl font-bold leading-[140%] text-left hover:no-underline">
                 Q. 제공되는 레시피는 모두 건강한 음식인가요?
               </AccordionTrigger>
-              <AccordionContent className="font-pretendard text-health-gray text-xl font-normal leading-[140%] pt-7">
+              <AccordionContent className="font-pretendard text-health-gray text-lg md:text-xl font-normal leading-[140%] pt-7">
                 A. 네! 사용자의 건강 상태에 맞춘 균형 잡힌 식단을 제공합니다.
               </AccordionContent>
             </AccordionItem>
@@ -281,10 +281,10 @@ export default function Index() {
               value="item-4"
               className="border-b border-health-gray-light pb-8"
             >
-              <AccordionTrigger className="font-pretendard text-health-gray text-xl font-bold leading-[140%] text-left hover:no-underline">
+              <AccordionTrigger className="font-pretendard text-health-gray text-lg md:text-xl font-bold leading-[140%] text-left hover:no-underline">
                 Q. 비건/채식 식단도 지원하나요?
               </AccordionTrigger>
-              <AccordionContent className="font-pretendard text-health-gray text-xl font-normal leading-[140%] pt-7">
+              <AccordionContent className="font-pretendard text-health-gray text-lg md:text-xl font-normal leading-[140%] pt-7">
                 A. 네! 사용자의 건강 상태에 맞춘 균형 잡힌 식단을 제공합니다.
               </AccordionContent>
             </AccordionItem>
