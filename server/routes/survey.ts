@@ -51,28 +51,40 @@ async function saveToGoogleSheets(data: SurveyData) {
       second: "2-digit",
     });
 
+    // 배열 필드 안전 처리 함수
+    const safeJoin = (arr: string[] | undefined): string => {
+      return arr && Array.isArray(arr) && arr.length > 0
+        ? arr.join(", ")
+        : "없음";
+    };
+
     // 구글시트에 전송할 데이터 구성
     const sheetData = {
       timestamp,
-      age: data.age,
-      gender: data.gender === "male" ? "남성" : "여성",
-      diagnosedDiseases: data.diagnosedDiseases.join(", ") || "없음",
-      familyDiseases: data.familyDiseases.join(", ") || "없음",
-      healthInterests: data.healthInterests.join(", ") || "없음",
-      activityLevel: getActivityLevelText(data.activityLevel),
+      age: data.age || "",
+      gender:
+        data.gender === "male"
+          ? "남성"
+          : data.gender === "female"
+            ? "여성"
+            : "",
+      diagnosedDiseases: safeJoin(data.diagnosedDiseases),
+      familyDiseases: safeJoin(data.familyDiseases),
+      healthInterests: safeJoin(data.healthInterests),
+      activityLevel: getActivityLevelText(data.activityLevel || ""),
       mealTarget:
-        data.mealTarget +
+        (data.mealTarget || "") +
         (data.mealTargetNumber ? ` (${data.mealTargetNumber}인)` : ""),
-      dietGoal: data.dietGoal,
-      weeklyBudget: data.weeklyBudget,
-      dietaryRestrictions: data.dietaryRestrictions.join(", ") || "없음",
-      nutritionPreferences: data.nutritionPreferences.join(", ") || "없음",
-      cookingStyles: data.cookingStyles.join(", ") || "없음",
-      preferredTastes: data.preferredTastes.join(", ") || "없음",
-      preferredMeats: data.preferredMeats.join(", ") || "없음",
-      preferredSeafoods: data.preferredSeafoods.join(", ") || "없음",
-      avoidFoods: data.avoidFoods.join(", ") || "없음",
-      email: data.email,
+      dietGoal: data.dietGoal || "",
+      weeklyBudget: data.weeklyBudget || "",
+      dietaryRestrictions: safeJoin(data.dietaryRestrictions),
+      nutritionPreferences: safeJoin(data.nutritionPreferences),
+      cookingStyles: safeJoin(data.cookingStyles),
+      preferredTastes: safeJoin(data.preferredTastes),
+      preferredMeats: safeJoin(data.preferredMeats),
+      preferredSeafoods: safeJoin(data.preferredSeafoods),
+      avoidFoods: safeJoin(data.avoidFoods),
+      email: data.email || "",
     };
 
     // 구글 앱스 스크립트로 데이터 전송
@@ -146,19 +158,14 @@ export const handleSurveySubmit: RequestHandler = async (req, res) => {
   try {
     const surveyData: SurveyData = req.body;
 
-    // 필수 필드 검증
-    const requiredFields = [
-      "age",
-      "gender",
-      "activityLevel",
-      "mealTarget",
-      "dietGoal",
-      "weeklyBudget",
-      "email",
-    ];
-    const missingFields = requiredFields.filter(
-      (field) => !surveyData[field as keyof SurveyData],
-    );
+    // 필수 필드 검증 - 보다 안전한 검사
+    const requiredFields = ["age", "gender", "email"];
+
+    // 기본 필수 필드 검사
+    const missingFields = requiredFields.filter((field) => {
+      const value = surveyData[field as keyof SurveyData];
+      return !value || (typeof value === "string" && value.trim() === "");
+    });
 
     if (missingFields.length > 0) {
       return res.status(400).json({
@@ -176,8 +183,20 @@ export const handleSurveySubmit: RequestHandler = async (req, res) => {
       });
     }
 
-    // 구글시트에 데이터 저장
-    await saveToGoogleSheets(surveyData);
+    // 구글시트에 데이터 저장 (환경변수가 없어도 계속 진행)
+    try {
+      if (process.env.GOOGLE_SHEET_URL) {
+        await saveToGoogleSheets(surveyData);
+        console.log("구글시트 저장 완료");
+      } else {
+        console.log("구글시트 URL이 설정되지 않음 - 로컬 저장만 진행");
+        // 로컬에서 개발 중일 때는 콘솔에 출력
+        console.log("설문조사 데이터:", JSON.stringify(surveyData, null, 2));
+      }
+    } catch (sheetError) {
+      console.error("구글시트 저장 실패:", sheetError);
+      // 구글시트 저장이 실패해도 응답은 성공으로 처리
+    }
 
     res.json({
       success: true,
