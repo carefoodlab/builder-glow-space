@@ -105,7 +105,7 @@ export default function Survey() {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      // 데이터 정리 및 검증
+      // 데���터 정리 및 검증
       const cleanedData = {
         ...formData,
         // 빈 배열을 명시적으로 설정
@@ -134,11 +134,7 @@ export default function Survey() {
       const result = await response.json();
 
       if (response.ok) {
-        alert(
-          result.message ||
-            "설문조사가 완료되었습니다! 맞춤 건강식단을 준비해드리겠습니다.",
-        );
-        navigate("/");
+        navigate("/thank-you");
       } else {
         alert(result.message || "오류가 발생했습니다. 다시 시도해주세요.");
       }
@@ -621,7 +617,7 @@ export default function Survey() {
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {[
-                    "한식(탕, 찌개)",
+                    "한식(탕, ���개)",
                     "한식(탕, 찌개 외)",
                     "일식",
                     "중식",
@@ -828,7 +824,7 @@ export default function Survey() {
                   🎉 설문조사 완료!
                 </h3>
                 <p className="font-pretendard text-health-gray/80 text-sm leading-relaxed">
-                  입력해주신 정보를 바탕으로 개인 맞춤형 건강식단을 분석하여
+                  입력해주신 정보를 바탕으로 개�� 맞춤형 건강식단을 분석하여
                   1-2일 내에 이메일로 전달해드리겠습니다. 건강한 라이프스타일의
                   시작을 응원합니다!
                 </p>
