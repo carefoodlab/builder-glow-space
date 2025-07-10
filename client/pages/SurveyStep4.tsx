@@ -64,11 +64,33 @@ export default function SurveyStep4() {
     try {
       // 이전 단계 데이터와 합쳐서 최종 제출
       const step3Data = location.state?.step3Data || {};
-      const finalData = { ...step3Data, ...formData };
+
+      // 모든 배열 필드 안전성 확보
+      const finalData = {
+        ...step3Data,
+        ...formData,
+        // 기본값 설정
+        age: step3Data.age || "0",
+        gender: step3Data.gender || "male",
+        diagnosedDiseases: [],
+        familyDiseases: [],
+        healthInterests: [],
+        activityLevel: step3Data.activityLevel || "inactive",
+        mealTarget: step3Data.mealTarget || "1인",
+        dietGoal: step3Data.dietGoal || "건강 개선",
+        weeklyBudget: step3Data.weeklyBudget || "50,000원 미만",
+        dietaryRestrictions: formData.dietaryRestrictions || [],
+        nutritionPreferences: formData.nutritionPreferences || [],
+        cookingStyles: formData.cookingStyles || [],
+        preferredTastes: formData.preferredTastes || [],
+        preferredMeats: formData.preferredMeats || [],
+        preferredSeafoods: formData.preferredSeafoods || [],
+        avoidFoods: formData.avoidFoods || [],
+        email: formData.email || "",
+      };
 
       console.log("Final Survey Data:", finalData);
 
-      // API 호출 또는 데이터 저장
       const response = await fetch("/api/survey", {
         method: "POST",
         headers: {
@@ -77,15 +99,20 @@ export default function SurveyStep4() {
         body: JSON.stringify(finalData),
       });
 
+      const result = await response.json();
+
       if (response.ok) {
-        alert("설문조사가 완료되었습니다! 맞춤 건강식단을 준비해드리겠습니다.");
+        alert(
+          result.message ||
+            "설문조사가 완료되었습니다! 맞춤 건강식단을 준비해드리겠습니다.",
+        );
         navigate("/");
       } else {
-        alert("오류가 발생했습니다. 다시 시도해주세요.");
+        alert(result.message || "오류가 발생했습니다. 다시 시도해주세요.");
       }
     } catch (error) {
       console.error("Error submitting survey:", error);
-      alert("오류가 발생했습니다. 다시 시도해주세요.");
+      alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
     } finally {
       setIsSubmitting(false);
     }

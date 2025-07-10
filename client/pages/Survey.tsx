@@ -105,23 +105,46 @@ export default function Survey() {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
+      // 데이터 정리 및 검증
+      const cleanedData = {
+        ...formData,
+        // 빈 배열을 명시적으로 설정
+        diagnosedDiseases: formData.diagnosedDiseases || [],
+        familyDiseases: formData.familyDiseases || [],
+        healthInterests: formData.healthInterests || [],
+        dietaryRestrictions: formData.dietaryRestrictions || [],
+        nutritionPreferences: formData.nutritionPreferences || [],
+        cookingStyles: formData.cookingStyles || [],
+        preferredTastes: formData.preferredTastes || [],
+        preferredMeats: formData.preferredMeats || [],
+        preferredSeafoods: formData.preferredSeafoods || [],
+        avoidFoods: formData.avoidFoods || [],
+      };
+
+      console.log("전송할 데이터:", cleanedData);
+
       const response = await fetch("/api/survey", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(cleanedData),
       });
 
+      const result = await response.json();
+
       if (response.ok) {
-        alert("설문조사가 완료되었습니다! 맞춤 건강식단을 준비해드리겠습니다.");
+        alert(
+          result.message ||
+            "설문조사가 완료되었습니다! 맞춤 건강식단을 준비해드리겠습니다.",
+        );
         navigate("/");
       } else {
-        alert("오류가 발생했습니다. 다시 시도해주세요.");
+        alert(result.message || "오류가 발생했습니다. 다시 시도해주세요.");
       }
     } catch (error) {
       console.error("Error submitting survey:", error);
-      alert("오류가 발생했습니다. 다시 시도해주세요.");
+      alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
     } finally {
       setIsSubmitting(false);
     }
@@ -169,7 +192,7 @@ export default function Survey() {
                   >
                     <option value="">선택해주세요</option>
                     <option value="male">남성</option>
-                    <option value="female">여성</option>
+                    <option value="female">여���</option>
                   </select>
                 </div>
               </div>
@@ -421,7 +444,7 @@ export default function Survey() {
                           handleInputChange("mealTargetNumber", e.target.value)
                         }
                         className="w-20 p-2 border border-gray-200 rounded-lg focus:border-health-orange focus:outline-none"
-                        placeholder="인원"
+                        placeholder="인���"
                         min="2"
                       />
                     )}
@@ -515,7 +538,7 @@ export default function Survey() {
             <div className="space-y-6 max-h-[600px] overflow-y-auto pr-2">
               <div>
                 <label className="block font-pretendard text-health-gray font-semibold mb-3">
-                  8. 식이 요구 사항을 선택해주세요 (복수 선택 가능)
+                  8. 식이 요구 사항을 선택해���세요 (복수 선택 가능)
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {[
