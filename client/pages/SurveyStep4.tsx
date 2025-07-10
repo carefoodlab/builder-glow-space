@@ -102,11 +102,7 @@ export default function SurveyStep4() {
       const result = await response.json();
 
       if (response.ok) {
-        alert(
-          result.message ||
-            "설문조사가 완료되었습니다! 맞춤 건강식단을 준비해드리겠습니다.",
-        );
-        navigate("/");
+        navigate("/thank-you");
       } else {
         alert(result.message || "오류가 발생했습니다. 다시 시도해주세요.");
       }
@@ -518,7 +514,7 @@ export default function SurveyStep4() {
                     <br />
                     <strong>1-2일 내에 이메일로 전달</strong>해드리겠습니다.
                     <br />
-                    건강한 라이프스타일의 시작을 응원합니다!
+                    건강한 라이프스타일의 시작을 응원합니���!
                   </p>
                 </div>
               </div>

@@ -192,7 +192,7 @@ export default function Survey() {
                   >
                     <option value="">선택해주세요</option>
                     <option value="male">남성</option>
-                    <option value="female">여���</option>
+                    <option value="female">여성</option>
                   </select>
                 </div>
               </div>
@@ -359,7 +359,7 @@ export default function Survey() {
                       value: "slightly_active",
                       label: "약간 활동적 (일주일에 1-2일 운동)",
                     },
-                    { value: "inactive", label: "비활동적 (운동 없음)" },
+                    { value: "inactive", label: "비활동적 (운동 ���음)" },
                   ].map((option) => (
                     <label
                       key={option.value}
@@ -444,7 +444,7 @@ export default function Survey() {
                           handleInputChange("mealTargetNumber", e.target.value)
                         }
                         className="w-20 p-2 border border-gray-200 rounded-lg focus:border-health-orange focus:outline-none"
-                        placeholder="인���"
+                        placeholder="인원"
                         min="2"
                       />
                     )}
@@ -538,7 +538,7 @@ export default function Survey() {
             <div className="space-y-6 max-h-[600px] overflow-y-auto pr-2">
               <div>
                 <label className="block font-pretendard text-health-gray font-semibold mb-3">
-                  8. 식이 요구 사항을 선택해���세요 (복수 선택 가능)
+                  8. 식이 요구 사항을 선택해주세요 (복수 선택 가능)
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {[
