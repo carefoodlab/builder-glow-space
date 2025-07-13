@@ -102,7 +102,12 @@ export default function SurveyStep4() {
       const result = await response.json();
 
       if (response.ok) {
-        navigate("/thank-you");
+        // 설문 데이터와 함께 결과 페이지로 이동
+        navigate("/diet-results", {
+          state: {
+            surveyData: finalData,
+          },
+        });
       } else {
         alert(result.message || "오류가 발생했습니다. 다시 시도해주세요.");
       }
@@ -445,7 +450,7 @@ export default function SurveyStep4() {
                   </div>
                 </div>
 
-                {/* 질문 13: 섭취 불가 및 기피 음식 */}
+                {/* ��문 13: 섭취 불가 및 기피 음식 */}
                 <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-2xl">
                   <label className="block font-pretendard text-health-gray font-bold text-lg mb-4">
                     13. 섭취 불가 및 기피 음식을 선택해주세요 (복수 선택 가능)

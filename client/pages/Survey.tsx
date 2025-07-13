@@ -134,7 +134,12 @@ export default function Survey() {
       const result = await response.json();
 
       if (response.ok) {
-        navigate("/thank-you");
+        // 설문 데이터와 함께 결과 페이지로 이동
+        navigate("/diet-results", {
+          state: {
+            surveyData: cleanedData,
+          },
+        });
       } else {
         alert(result.message || "오류가 발생했습니다. 다시 시도해주세요.");
       }
@@ -300,7 +305,7 @@ export default function Survey() {
             <div className="space-y-6">
               <div>
                 <label className="block font-pretendard text-health-gray font-semibold mb-3">
-                  3. 관심 있는 건강 정보를 선택해주세요 (최대 3개)
+                  3. 관심 있는 건강 ���보를 선택해주세요 (최대 3개)
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {[
@@ -538,7 +543,7 @@ export default function Survey() {
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {[
-                    "유제품 무함유",
+                    "유제품 무함��",
                     "글루텐 무함유",
                     "대두 무함유",
                     "견과류 무함유",
