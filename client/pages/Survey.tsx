@@ -126,7 +126,7 @@ export default function Survey() {
       const result = await response.json();
 
       if (response.ok) {
-        // 설문 데���터와 함께 결과 페이지로 이동
+        // 설문 데이터와 함께 결과 페이지로 이동
         navigate("/diet-results", {
           state: {
             surveyData: cleanedData,
@@ -192,21 +192,17 @@ export default function Survey() {
 
               <div>
                 <label className="block font-pretendard text-health-gray font-semibold mb-3">
-                  1. 병원이나 건강검진에서 진단 받은 질환을 선택해주세요 (최대
-                  3개)
+                  1. 진단을 받았거나 주의가 필요한 질환을 우선 순위에 따라
+                  선택해주세요 (최대 3개 선택 가능)
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {[
+                    "간질환",
+                    "고지혈증",
                     "고혈압",
                     "당뇨병",
-                    "고지혈증",
-                    "비만",
-                    "심혈관 질환",
-                    "만성 위장장애",
-                    "호흡기 질환",
-                    "간 질환",
-                    "기타",
-                    "해당 없음",
+                    "신장질환",
+                    "없음",
                   ].map((option) => (
                     <label
                       key={option}
@@ -237,34 +233,33 @@ export default function Survey() {
 
               <div>
                 <label className="block font-pretendard text-health-gray font-semibold mb-3">
-                  2. 가족 중 주요 질환을 가진 사람이 있습니까? (최대 3개)
+                  2. 관심 있는 건강 정보를 우선 순위에 따라 선택해주세요 (최대
+                  3개 선택 가능)
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {[
-                    "고혈압",
-                    "당뇨병",
-                    "고지혈증",
-                    "비만",
-                    "심혈관 질환",
-                    "만성 위장장애",
-                    "호흡기 질환",
-                    "간 질환",
-                    "기타",
-                    "해당 없음",
+                    "체중 감량",
+                    "근육 증진",
+                    "뼈/관절 건강",
+                    "소화기/장 건강",
+                    "면역력 강화",
+                    "스트레스 관리",
+                    "노화 방지",
+                    "없음",
                   ].map((option) => (
                     <label
                       key={option}
                       className={`flex items-center p-3 border rounded-xl hover:border-health-orange transition-colors cursor-pointer ${
-                        formData.familyDiseases.includes(option)
+                        formData.healthInterests.includes(option)
                           ? "border-health-orange bg-health-orange/5"
                           : "border-gray-200"
                       }`}
                     >
                       <input
                         type="checkbox"
-                        checked={formData.familyDiseases.includes(option)}
+                        checked={formData.healthInterests.includes(option)}
                         onChange={() =>
-                          handleMultiSelect("familyDiseases", option, 3)
+                          handleMultiSelect("healthInterests", option, 3)
                         }
                         className="mr-3 text-health-orange focus:ring-health-orange"
                       />
@@ -275,7 +270,7 @@ export default function Survey() {
                   ))}
                 </div>
                 <p className="text-xs text-health-gray/60 mt-2">
-                  선택된 항목: {formData.familyDiseases.length}/3
+                  선택된 항목: {formData.healthInterests.length}/3
                 </p>
               </div>
             </div>
