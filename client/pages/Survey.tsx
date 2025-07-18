@@ -184,7 +184,7 @@ export default function Survey() {
                     className="w-full p-4 border border-gray-200 rounded-xl focus:border-health-orange focus:outline-none transition-colors font-pretendard"
                   >
                     <option value="">선택해주세요</option>
-                    <option value="male">남성</option>
+                    <option value="male">���성</option>
                     <option value="female">여성</option>
                   </select>
                 </div>
@@ -296,14 +296,10 @@ export default function Survey() {
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {[
-                    "체중 감량",
-                    "근육 증진",
-                    "뼈/관절 건강",
-                    "소화기/장 건강",
-                    "면역력 강화",
-                    "스트레스 관리",
-                    "노화 방지",
-                    "기타",
+                    "매우 활동적 (일주일에 5일 이상 운동)",
+                    "활동적 (일주일에 3-4일 운동)",
+                    "약간 활동적 (일주일에 1-2일 운동)",
+                    "비활동적 (운동 없음)",
                   ].map((option) => (
                     <label
                       key={option}
@@ -334,7 +330,7 @@ export default function Survey() {
 
               <div>
                 <label className="block font-pretendard text-health-gray font-semibold mb-3">
-                  4. 일상 활동 수준을 평가해주세요 *
+                  3. 일상 활동 수준을 평가해주세요
                 </label>
                 <div className="grid grid-cols-1 gap-3">
                   {[
@@ -688,7 +684,7 @@ export default function Survey() {
                       육류
                     </p>
                     <div className="grid grid-cols-2 gap-2">
-                      {["소고기", "돼지고기", "닭고기", "양고기"].map(
+                      {["���고기", "돼지고기", "닭고기", "양고기"].map(
                         (option) => (
                           <label
                             key={option}
