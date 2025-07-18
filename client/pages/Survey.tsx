@@ -9,13 +9,11 @@ interface SurveyData {
 
   // 건강 관련 질문
   diagnosedDiseases: string[];
-  familyDiseases: string[];
   healthInterests: string[];
   activityLevel: string;
 
   // 필요 재료 조사
   mealTarget: string;
-  mealTargetNumber?: string;
   dietGoal: string;
   weeklyBudget: string;
 
@@ -23,7 +21,6 @@ interface SurveyData {
   dietaryRestrictions: string[];
   nutritionPreferences: string[];
   cookingStyles: string[];
-  preferredTastes: string[];
   preferredMeats: string[];
   preferredSeafoods: string[];
   avoidFoods: string[];
@@ -40,17 +37,14 @@ export default function Survey() {
     age: "",
     gender: "",
     diagnosedDiseases: [],
-    familyDiseases: [],
     healthInterests: [],
     activityLevel: "",
     mealTarget: "",
-    mealTargetNumber: "",
     dietGoal: "",
     weeklyBudget: "",
     dietaryRestrictions: [],
     nutritionPreferences: [],
     cookingStyles: [],
-    preferredTastes: [],
     preferredMeats: [],
     preferredSeafoods: [],
     avoidFoods: [],
@@ -110,12 +104,10 @@ export default function Survey() {
         ...formData,
         // 빈 배열을 명시적으로 설정
         diagnosedDiseases: formData.diagnosedDiseases || [],
-        familyDiseases: formData.familyDiseases || [],
         healthInterests: formData.healthInterests || [],
         dietaryRestrictions: formData.dietaryRestrictions || [],
         nutritionPreferences: formData.nutritionPreferences || [],
         cookingStyles: formData.cookingStyles || [],
-        preferredTastes: formData.preferredTastes || [],
         preferredMeats: formData.preferredMeats || [],
         preferredSeafoods: formData.preferredSeafoods || [],
         avoidFoods: formData.avoidFoods || [],
@@ -134,7 +126,7 @@ export default function Survey() {
       const result = await response.json();
 
       if (response.ok) {
-        // 설문 데이터와 함께 결과 페이지로 이동
+        // 설문 데���터와 함께 결과 페이지로 이동
         navigate("/diet-results", {
           state: {
             surveyData: cleanedData,
