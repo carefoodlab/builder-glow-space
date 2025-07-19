@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { saveSurveyResponse } from "@/lib/supabase";
+import type { SurveyResponse } from "@/lib/supabase";
 
 interface SurveyData {
   age: string;
@@ -88,39 +90,43 @@ export default function Survey() {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      const cleanedData = {
-        ...formData,
-        diagnosedDiseases: formData.diagnosedDiseases || [],
-        healthInterests: formData.healthInterests || [],
-        dietaryRestrictions: formData.dietaryRestrictions || [],
-        nutritionPreferences: formData.nutritionPreferences || [],
-        cookingStyles: formData.cookingStyles || [],
-        preferredMeats: formData.preferredMeats || [],
-        preferredSeafoods: formData.preferredSeafoods || [],
-        avoidFoods: formData.avoidFoods || [],
+      // Supabase에 맞는 데이터 형식으로 변환
+      const supabaseData: Omit<SurveyResponse, "id" | "created_at"> = {
+        age: formData.age,
+        diagnosed_diseases: formData.diagnosedDiseases || [],
+        health_interests: formData.healthInterests || [],
+        activity_level: formData.activityLevel,
+        meal_target: formData.mealTarget,
+        diet_goal: formData.dietGoal,
+        weekly_budget: formData.weeklyBudget,
+        dietary_restrictions: formData.dietaryRestrictions || [],
+        nutrition_preferences: formData.nutritionPreferences || [],
+        cooking_styles: formData.cookingStyles || [],
+        preferred_meats: formData.preferredMeats || [],
+        preferred_seafoods: formData.preferredSeafoods || [],
+        avoid_foods: formData.avoidFoods || [],
+        email: formData.email,
       };
 
-      const response = await fetch("/api/survey", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(cleanedData),
-      });
+      console.log("전송할 데이터:", supabaseData);
 
-      const result = await response.json();
+      // Supabase에 데이터 저장
+      const result = await saveSurveyResponse(supabaseData);
 
-      if (response.ok) {
+      if (result.success) {
+        alert("설문조사가 성공적으로 제출되었습니다!");
         navigate("/diet-results", {
           state: {
-            surveyData: cleanedData,
+            surveyData: supabaseData,
+            supabaseId: result.data?.[0]?.id,
           },
         });
       } else {
-        alert(result.message || "오류가 발생했습니다. 다시 시도해주세요.");
+        console.error("Supabase 저장 오류:", result.error);
+        alert("데이터 저장 중 오류가 발생했습니다. 다시 시도해주세요.");
       }
     } catch (error) {
-      console.error("Error submitting survey:", error);
+      console.error("설문조사 제출 오류:", error);
       alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
     } finally {
       setIsSubmitting(false);
@@ -156,7 +162,7 @@ export default function Survey() {
           <div className="space-y-6">
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold mb-4">건강 관련 질문</h2>
-              <p className="text-gray-600">건�� 상태 및 관심사를 알려주세요</p>
+              <p className="text-gray-600">건강 상태 및 관심사를 알려주세요</p>
             </div>
 
             <div>
@@ -390,7 +396,7 @@ export default function Survey() {
             <div className="bg-orange-50 p-6 rounded-lg">
               <h3 className="font-semibold mb-3">🎉 설문조사 완료!</h3>
               <p className="text-sm text-gray-600">
-                입력해주신 정보를 바탕으로 개인 맞춤형 건강식단을 분석하여 1-2일
+                입력해주신 정보를 바탕으로 개�� 맞춤형 건강식단을 분석하여 1-2일
                 내에 이메일로 전달해드리겠습니다.
               </p>
             </div>
