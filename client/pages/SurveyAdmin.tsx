@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { getSurveyResponses } from "@/lib/supabase";
+import { getSurveyResponses, getConnectionStatus } from "@/lib/supabase";
 import type { SurveyResponse } from "@/lib/supabase";
 
 export default function SurveyAdmin() {
   const [surveys, setSurveys] = useState<SurveyResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const connectionStatus = getConnectionStatus();
 
   useEffect(() => {
     loadSurveys();
@@ -121,9 +122,29 @@ export default function SurveyAdmin() {
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-gray-900">
-              설문조사 관리자 대시보드
-            </h1>
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">
+                설문조사 관리자 대시보드
+              </h1>
+              <div className="mt-1 flex items-center gap-2">
+                <div
+                  className={`px-2 py-1 text-xs rounded-full ${
+                    connectionStatus.isConfigured
+                      ? "bg-green-100 text-green-800"
+                      : "bg-yellow-100 text-yellow-800"
+                  }`}
+                >
+                  {connectionStatus.isConfigured
+                    ? "🟢 Supabase 연결됨"
+                    : "🟡 로컬 모드"}
+                </div>
+                {connectionStatus.usingFallback && (
+                  <span className="text-xs text-gray-500">
+                    (데이터가 브라우저에 임시 저장됨)
+                  </span>
+                )}
+              </div>
+            </div>
             <div className="flex gap-4">
               <Button
                 onClick={loadSurveys}
