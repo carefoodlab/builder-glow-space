@@ -114,11 +114,19 @@ export default function Survey() {
       const result = await saveSurveyResponse(supabaseData);
 
       if (result.success) {
-        alert("설문조사가 성공적으로 제출되었습니다!");
+        const isUsingSupabase =
+          import.meta.env.VITE_SUPABASE_URL &&
+          !import.meta.env.VITE_SUPABASE_URL.includes("your-project");
+        const message = isUsingSupabase
+          ? "설문조사가 Supabase에 성공적으로 저장되었습니다! 🎉"
+          : "설문조사가 로컬에 임시 저장되었습니다. (개발 모드)💾";
+
+        alert(message);
         navigate("/diet-results", {
           state: {
             surveyData: supabaseData,
             supabaseId: result.data?.[0]?.id,
+            isUsingSupabase,
           },
         });
       } else {
@@ -396,7 +404,7 @@ export default function Survey() {
             <div className="bg-orange-50 p-6 rounded-lg">
               <h3 className="font-semibold mb-3">🎉 설문조사 완료!</h3>
               <p className="text-sm text-gray-600">
-                입력해주신 정보를 바탕으로 개�� 맞춤형 건강식단을 분석하여 1-2일
+                입력해주신 정보를 바탕으로 개인 맞춤형 건강식단을 분석하여 1-2일
                 내에 이메일로 전달해드리겠습니다.
               </p>
             </div>
