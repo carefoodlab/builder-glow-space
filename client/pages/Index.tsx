@@ -18,6 +18,29 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-orange-50/30 to-white">
+      {/* 개발자 도구 (개발 모드에서만 표시) */}
+      {import.meta.env.DEV && (
+        <div className="bg-blue-50 border-b border-blue-200">
+          <div className="container mx-auto px-4 py-2">
+            <div className="flex items-center justify-center gap-4 text-sm">
+              <span className="text-blue-600">🔧 개발자 도구:</span>
+              <button
+                onClick={() => navigate("/supabase-status")}
+                className="text-blue-600 hover:text-blue-800 underline"
+              >
+                Supabase 설정 확인
+              </button>
+              <button
+                onClick={() => navigate("/admin/surveys")}
+                className="text-blue-600 hover:text-blue-800 underline"
+              >
+                관리자 대시보드
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
       <section
         className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[660px] bg-cover bg-center overflow-hidden"
@@ -148,7 +171,7 @@ export default function Index() {
                   개인 건강 상태 분석
                 </h3>
                 <p className="font-pretendard text-health-gray/80 text-sm sm:text-base md:text-lg lg:text-xl font-normal leading-[140%]">
-                  AI가 혈압, 혈당, 등 주요 데이터를 이해하여 현재 개인의
+                  AI가 혈압, 혈당, 등 주요 데이���를 이해하여 현재 개인의
                   건강상태를 자세히 분석하여 보여줍니다
                 </p>
               </div>
@@ -353,7 +376,7 @@ export default function Index() {
                 저는 요리에는 자신도 없고, 건강식 하면 뭔가 복잡하고 맛없는
                 음식이라는 이미지가 있었어요. 그런데 추천받은 레시피들은 재료도
                 최소한이고, 만드는 데 15분도 안 걸리는데 정말 맛있더라고요. 매일
-                새��운 아이디어가 떠오르는 느낌이라 재미도 있어요. 이젠 혼자
+                새로운 아이디어가 떠오르는 느낌이라 재미도 있어요. 이젠 혼자
                 사는 친구들한테도 추천하게 됐어요.
                 <span className="text-blue-500 text-2xl sm:text-3xl lg:text-4xl font-bold">
                   "
@@ -392,7 +415,7 @@ export default function Index() {
                 <span className="text-purple-500 text-2xl sm:text-3xl lg:text-4xl font-bold absolute -top-1 sm:-top-2 -left-1 sm:-left-2">
                   "
                 </span>
-                요즘 부모님 건강이 예전 같지 않아서 늘 ��정이 많았거든요. 그런데
+                요즘 부모님 건강이 예전 같지 않아서 늘 걱정이 많았거든요. 그런데
                 나이와 생활 습관에 맞춘 식단을 제안해줘서 처음엔 '귀찮다'고
                 하시던 엄마가 요즘은 '이거 덕분에 속도 편하고 혈압도 좀 내려간
                 것 같다'고 하시더라고요. 매일 뭘 챙겨드리긴 어렵지만, 이런
@@ -433,7 +456,7 @@ export default function Index() {
                   Q. 어떤 건강 정보를 입력해야 하나요?
                 </AccordionTrigger>
                 <AccordionContent className="font-pretendard text-health-gray/80 text-sm sm:text-base md:text-lg lg:text-xl font-normal leading-[140%] pt-4 sm:pt-6 border-t border-gray-100 mt-3 sm:mt-4">
-                  A. 기본적으로 알레���기 정보, 건강 목표(다이어트, 근육 증가,
+                  A. 기본적으로 알레르기 정보, 건강 목표(다이어트, 근육 증가,
                   균형 잡힌 식단 등), 선호하는 음식 등을 입력하면 됩니다.
                 </AccordionContent>
               </AccordionItem>
