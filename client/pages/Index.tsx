@@ -110,7 +110,7 @@ export default function Index() {
                   className="w-full lg:w-[570px] h-[200px] sm:h-[250px] md:h-[300px] lg:h-[390px] object-cover transform transition-all duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-tr from-health-orange/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 w-10 h-10 sm:w-12 sm:h-12 bg-health-orange rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-lg">
+                <div className="absolute top-3 right-3 sm:top-4 sm:right-4 w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-lg">
                   1
                 </div>
               </div>
@@ -163,7 +163,10 @@ export default function Index() {
                   className="w-full lg:w-[570px] h-[200px] sm:h-[250px] md:h-[300px] lg:h-[390px] object-cover transform transition-all duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-tr from-green-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 w-10 h-10 sm:w-12 sm:h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-lg">
+                <div
+                  className="absolute top-3 sm:top-4 w-10 h-10 sm:w-12 sm:h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-lg"
+                  style={{ left: "465px", top: "19px" }}
+                >
                   3
                 </div>
               </div>
@@ -350,7 +353,7 @@ export default function Index() {
                 저는 요리에는 자신도 없고, 건강식 하면 뭔가 복잡하고 맛없는
                 음식이라는 이미지가 있었어요. 그런데 추천받은 레시피들은 재료도
                 최소한이고, 만드는 데 15분도 안 걸리는데 정말 맛있더라고요. 매일
-                새로운 아이디어가 떠오르는 느낌이라 재미도 있어요. 이젠 혼자
+                새��운 아이디어가 떠오르는 느낌이라 재미도 있어요. 이젠 혼자
                 사는 친구들한테도 추천하게 됐어요.
                 <span className="text-blue-500 text-2xl sm:text-3xl lg:text-4xl font-bold">
                   "
@@ -389,7 +392,7 @@ export default function Index() {
                 <span className="text-purple-500 text-2xl sm:text-3xl lg:text-4xl font-bold absolute -top-1 sm:-top-2 -left-1 sm:-left-2">
                   "
                 </span>
-                요즘 부모님 건강이 예전 같지 않아서 늘 걱정이 많았거든요. 그런데
+                요즘 부모님 건강이 예전 같지 않아서 늘 ��정이 많았거든요. 그런데
                 나이와 생활 습관에 맞춘 식단을 제안해줘서 처음엔 '귀찮다'고
                 하시던 엄마가 요즘은 '이거 덕분에 속도 편하고 혈압도 좀 내려간
                 것 같다'고 하시더라고요. 매일 뭘 챙겨드리긴 어렵지만, 이런
@@ -430,7 +433,7 @@ export default function Index() {
                   Q. 어떤 건강 정보를 입력해야 하나요?
                 </AccordionTrigger>
                 <AccordionContent className="font-pretendard text-health-gray/80 text-sm sm:text-base md:text-lg lg:text-xl font-normal leading-[140%] pt-4 sm:pt-6 border-t border-gray-100 mt-3 sm:mt-4">
-                  A. 기본적으로 알레르기 정보, 건강 목표(다이어트, 근육 증가,
+                  A. 기본적으로 알레���기 정보, 건강 목표(다이어트, 근육 증가,
                   균형 잡힌 식단 등), 선호하는 음식 등을 입력하면 됩니다.
                 </AccordionContent>
               </AccordionItem>
